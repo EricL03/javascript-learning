@@ -52,6 +52,10 @@ button.number:hover {
     background-color: #ced4da;
 }
 
+button.number:active {
+    background-color: #868e96; /* Darker gray */
+}
+
 button.operation {
     background-color: #ffc107;
     color: #212529;
@@ -59,6 +63,10 @@ button.operation {
 
 button.operation:hover {
     background-color: #ffcd39;
+}
+
+button.operation:active {
+    background-color: #e0a800;
 }
 
 button.clear {
@@ -70,6 +78,10 @@ button.clear:hover {
     background-color: #e74c3c; /* Bright red */
 }
 
+button.clear:active {
+    background-color: #c82333; /* Darker red */
+}
+
 button.remove{
     background-color: #e57373; /* Backspace: Lighter Red */
     color: white;
@@ -79,6 +91,9 @@ button.remove:hover {
     background-color: #ef5350; /* Slightly brighter red */
 }
 
+button.remove:active {
+    background-color: #d32f2f; /* Darker red */
+}
 
 button.parentheses, button.comma {
     background-color: #adb5bd; /* Parentheses and Comma: Gray */
@@ -89,6 +104,10 @@ button.parentheses:hover, button.comma:hover {
     background-color: #ced4da;
 }
 
+button.parentheses:active, button.comma:active {
+    background-color: #868e96; 
+}
+
 button.equals {
     background-color: #198754;
     color: white;
@@ -96,4 +115,8 @@ button.equals {
 
 button.equals:hover {
     background-color: #1f9d5c;
+}
+
+button.equals:active {
+    background-color: #145a32; 
 }
