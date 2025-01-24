@@ -5,7 +5,12 @@ const result = document.getElementById("result");
 const clearButton = document.querySelector(".clear"); 
 const removeButton = document.querySelector(".remove"); 
 const numberButtons = document.querySelectorAll(".number");  
+const operationButtons = document.querySelectorAll(".operation");  
 const commaButton = document.querySelector(".comma"); 
+const parenthesesButton = document.querySelector(".parentheses"); 
+
+// Global variables
+let parenthesesOpened = false; 
 
 
 // Add event handling to buttons using javascript fucntions
@@ -15,6 +20,17 @@ clearButton.addEventListener("click", () => {
 
 removeButton.addEventListener("click", () => {
     result.value = result.value.slice(0, -1); 
+});
+
+parenthesesButton.addEventListener("click", () => {
+    if (parenthesesOpened) {
+        result.value += ")";  
+        parenthesesOpened = false; 
+    }
+    else {
+        result.value += "(";  
+        parenthesesOpened = true; 
+    }
 });
 
 commaButton.addEventListener("click", () => {
@@ -27,5 +43,11 @@ commaButton.addEventListener("click", () => {
 numberButtons.forEach(button => {
     button.addEventListener("click", () => {
         result.value += button.getAttribute("data-value"); 
+    })
+}); 
+
+operationButtons.forEach(operation => {
+    operation.addEventListener("click", () => {
+        result.value += operation.getAttribute("data-value"); 
     })
 }); 
