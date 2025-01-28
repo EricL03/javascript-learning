@@ -106,8 +106,9 @@ operationButtons.forEach(operation => {
     operation.addEventListener("click", () => {
         operationValue = operation.getAttribute("data-value"); 
 
-        // You can only add an operation if a number precedes it!!!
-        if (numberOpened) {
+        // You can only add an operation if a number precedes it
+        // or if a percentage precedes a normal operation!!!
+        if (numberOpened || (data[data.length - 1] === "%" && operationValue !== "%")) {
             result.value += operationValue; 
             data.push(operationValue);  
             numberOpened = false; 
