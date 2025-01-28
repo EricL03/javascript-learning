@@ -39,6 +39,21 @@ removeButton.addEventListener("click", () => {
         else if (removed === "(") {
             parenthesesOpened = false; 
         }
+        else if (containsNumber(removed) || removed === ".") {
+            removed = removed.slice(0, -1); 
+
+            if (removed !== "") {
+                data.push(removed); 
+                numberOpened = true; 
+            }
+            else {
+                numberOpened = false; 
+            }
+        }
+        else {
+            // We have removed an operation, hence a number is opened 
+            numberOpened = true; 
+        }
     }
 });
 
@@ -101,5 +116,14 @@ operationButtons.forEach(operation => {
 }); 
 
 equalsButton.addEventListener("click", () => {
-    result.value = "yay!!!";  
+    //result.value = "yay!!!";  
+    console.log(data); 
 });
+
+
+// Helper functions 
+function containsNumber(str) {
+    // Regular expression to check for digits (0-9)
+    const regex = /\d/;
+    return regex.test(str);
+}
