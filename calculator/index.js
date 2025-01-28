@@ -12,12 +12,6 @@ const equalsButton = document.querySelector(".equals");
 
 // Global variables
 let parenthesesOpened = false; 
-let parenthesesAdded = 0; 
-let percentsAdded = 0;  
-let dividesAdded = 0;  
-let multipliesAdded = 0;  
-let minusAdded = 0;  
-let plusAdded = 0;  
 
 let data = []; 
 let numberOpened = false; 
@@ -28,12 +22,6 @@ clearButton.addEventListener("click", () => {
     result.value = ""; 
 
     parenthesesOpened = false; 
-    parenthesesAdded = 0; 
-    percentsAdded = 0;  
-    dividesAdded = 0;  
-    multipliesAdded = 0;  
-    minusAdded = 0;  
-    plusAdded = 0;  
 
     data = []; 
     numberOpened = false; 
@@ -41,6 +29,17 @@ clearButton.addEventListener("click", () => {
 
 removeButton.addEventListener("click", () => {
     result.value = result.value.slice(0, -1); 
+
+    if (data.length > 0) {
+        removed = data.pop(); 
+
+        if (removed === ")") {
+            parenthesesOpened = true; 
+        } 
+        else if (removed === "(") {
+            parenthesesOpened = false; 
+        }
+    }
 });
 
 parenthesesButton.addEventListener("click", () => {
@@ -48,11 +47,12 @@ parenthesesButton.addEventListener("click", () => {
 
     if (parenthesesOpened) {
         result.value += ")";  
-        parenthesesAdded++; 
+        data.push(")"); 
         parenthesesOpened = false; 
     }
     else {
         result.value += "(";  
+        data.push("("); 
         parenthesesOpened = true; 
     }
 });
@@ -60,57 +60,46 @@ parenthesesButton.addEventListener("click", () => {
 commaButton.addEventListener("click", () => {
     // You can only add one (1) comma in a row
     if (!(result.value[result.value.length - 1] === ".")) {
-        result.value += "."; 
+        if (!numberOpened) {
+            result.value += "0."; 
+            data.push("0."); 
+        }
+        else {
+            result.value += "."; 
+            data[data.length - 1] = data[data.length - 1] + "."; 
+        }
+        
+        numberOpened = true; 
     }
 });
 
 numberButtons.forEach(button => {
     button.addEventListener("click", () => {
-        result.value += button.getAttribute("data-value"); 
+        if (!numberOpened) {
+            data.push(button.getAttribute("data-value"));  
+        }
+        else {
+            data[data.length - 1] = data[data.length - 1] + button.getAttribute("data-value"); 
+        }
+
+        result.value += button.getAttribute("data-value");
+        numberOpened = true; 
     })
 }); 
 
 operationButtons.forEach(operation => {
     operation.addEventListener("click", () => {
         operationValue = operation.getAttribute("data-value"); 
-        if (operationValue === "+") {
-            plusAdded++; 
-        }
-        else if (operationValue === "-") {
-            minusAdded++; 
-        }
-        else if (operationValue === "*") {
-            multipliesAdded++; 
-        }
-        else if (operationValue === "/") {
-            dividesAdded++; 
-        }
-        else if (operationValue === "%") {
-            percentsAdded++; 
-        }
 
-        result.value += operationValue; 
+        // You can only add an operation if a number precedes it!!!
+        if (numberOpened) {
+            result.value += operationValue; 
+            data.push(operationValue);  
+            numberOpened = false; 
+        }
     })
 }); 
 
 equalsButton.addEventListener("click", () => {
     result.value = "yay!!!";  
-
-    // Evaluate parentheses first
-    if (parenthesesAdded) {
-        if (parenthesesOpened) {
-            result.value = "Error"; 
-        }
-        else {
-
-        }
-    }
-
-    // Evaluate addition
-    while (plusAdded > 0) {
-        result.value = "addition!!!";  
-        
-        plusAdded--; 
-    }
-    
 });
