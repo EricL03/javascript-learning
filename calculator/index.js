@@ -122,9 +122,22 @@ equalsButton.addEventListener("click", () => {
     
     // Evaluate all percentages in equation
     evalPercentages(); 
+    
+    // Evaluate all divitions in equation
+    evalOperations("/"); 
+    
+    // Evaluate all multiplications in equation
+    evalOperations("*"); 
+    
+    // Evaluate all additions in equation
+    evalOperations("+"); 
+    
+    // Evaluate all subtraktions in equation
+    evalOperations("-"); 
 
     
     console.log(data); 
+    result.value = data[0]; 
 });
 
 
@@ -157,5 +170,43 @@ function evalPercentages() {
         data.splice(percent - 1, 1); // Remove the element at the lower index
         // Insert the new object at the position of index1
         data.splice(percent - 1, 0, String(newValue));
+    }
+}
+
+function evalOperations(operation) {
+    // Find instances of multiplication 
+    let foundMultiplicationsIndex = []; 
+    for (let i = 0; i < data.length; i++) {
+        if (data[i] === operation) {
+            foundMultiplicationsIndex.push(i); 
+        }
+    }
+
+    // Reverse array to remove biggest index first...
+    foundMultiplicationsIndex.reverse(); 
+
+    // Evaluate all multiplications from right to left 
+    for (let multiplication of foundMultiplicationsIndex) {
+        // Calculate the value 
+        let newValue = 0; 
+        if (operation === "*") {
+            newValue = Number(data[multiplication-1]) * Number(data[multiplication+1]); 
+        }
+        else if (operation === "/") {
+            newValue = Number(data[multiplication-1]) / Number(data[multiplication+1]); 
+        }
+        else if (operation === "+") {
+            newValue = Number(data[multiplication-1]) + Number(data[multiplication+1]); 
+        }
+        else if (operation === "-") {
+            newValue = Number(data[multiplication-1]) - Number(data[multiplication+1]); 
+        }
+
+        // Remove the elements at index1 and index2
+        data.splice(multiplication + 1, 1); // Remove the element at the highest index first
+        data.splice(multiplication, 1); // Remove the element at the middle index next
+        data.splice(multiplication - 1, 1); // Remove the element at the lowest index last
+        // Insert the new object at the lower index
+        data.splice(multiplication - 1, 0, String(newValue));
     }
 }
