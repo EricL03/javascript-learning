@@ -119,7 +119,23 @@ operationButtons.forEach(operation => {
 equalsButton.addEventListener("click", () => {
     //result.value = "yay!!!";  
     //console.log(data); 
+    
+    // Evaluate all percentages in equation
+    evalPercentages(); 
 
+    
+    console.log(data); 
+});
+
+
+// Helper functions 
+function containsNumber(str) {
+    // Regular expression to check for digits (0-9)
+    const regex = /\d/;
+    return regex.test(str);
+}
+
+function evalPercentages() {
     // Find percentages
     let foundPercentagesIndex = []; 
     for (let i = 0; i < data.length; i++) {
@@ -142,14 +158,4 @@ equalsButton.addEventListener("click", () => {
         // Insert the new object at the position of index1
         data.splice(percent - 1, 0, String(newValue));
     }
-    
-    console.log(data); 
-});
-
-
-// Helper functions 
-function containsNumber(str) {
-    // Regular expression to check for digits (0-9)
-    const regex = /\d/;
-    return regex.test(str);
 }
