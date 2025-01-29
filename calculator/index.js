@@ -118,6 +118,31 @@ operationButtons.forEach(operation => {
 
 equalsButton.addEventListener("click", () => {
     //result.value = "yay!!!";  
+    //console.log(data); 
+
+    // Find percentages
+    let foundPercentagesIndex = []; 
+    for (let i = 0; i < data.length; i++) {
+        if (data[i] === "%") {
+            foundPercentagesIndex.push(i); 
+        }
+    }
+
+    // Reverse array to remove biggest index first...
+    foundPercentagesIndex.reverse(); 
+
+    // Evaluate percentages
+    for (let percent of foundPercentagesIndex) {
+        // Calculate the value 
+        let newValue = Number(data[percent-1]) / 100; 
+
+        // Remove the elements at index1 and index2
+        data.splice(percent, 1); // Remove the element at the higher index first
+        data.splice(percent - 1, 1); // Remove the element at the lower index
+        // Insert the new object at the position of index1
+        data.splice(percent - 1, 0, String(newValue));
+    }
+    
     console.log(data); 
 });
 
